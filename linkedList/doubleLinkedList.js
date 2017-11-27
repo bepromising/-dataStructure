@@ -40,7 +40,7 @@ class DoubleLinkedList {
         index = 0,
         current = this.head;
 
-      if (position === 0) { // 如果插入的位置为 0 。
+      if (!position) { // 如果插入的位置为 0 。
         this.head = node;
         node.previous = this.previous; //node的前一个是链表的previous。
         node.next = current; // node的后一个是之前head所指的，即是current。
@@ -65,7 +65,7 @@ class DoubleLinkedList {
     if (position > -1 && position < this.length) {
       let current = this.head, front, index = 0;
 
-      if (position === 0) { // 位置为 0 。
+      if (!position) { // 位置为 0 。
         this.head = current.next;
         current.next.previous = this.previous;
       } else {
