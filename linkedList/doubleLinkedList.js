@@ -73,7 +73,7 @@ class DoubleLinkedList {
           front = current;
           current = current.next;
         }
-        if (current.next) { // 这里判断当前node的下一个是否为 null
+        if (current.next) { // 这里判断当前node的下一个是否为 null。（例如要删除最后一个是node.next是null的）
           current.next.previous = front; // 当前node的下一个的previous为front。（有点绕口）
         }
         front.next = current.next; // 前一个的下一个为当前node的下一个。 (...绕口)
