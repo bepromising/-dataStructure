@@ -1,6 +1,8 @@
 class List {
   constructor () {
     this.instance = [];
+    // 如果class有私有属性就好了，console.log(this)就不会有instance属性打印出
+    // list_2.js 另一种实现方法。
   }
 
   push (element) {
