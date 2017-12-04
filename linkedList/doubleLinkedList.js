@@ -8,50 +8,54 @@ class Node {
 
 class DoubleLinkedList {
   constructor () {
-    this.previous = null;
     this.head = null;
     this.length = 0;
   }
 
+  /**
+   * 
+   * @param element 用来实例节点的数据,什么数据类型都行. 
+   */
   append (element) {
     let node = new Node(element), current;
 
-    if (!this.length) { // 是新的链表。
-      this.head = node; // 链表的头指向新的node。
-      node.previous = this.previous; // node的previous指向链表的previous。
+    if (!this.length) {                 // 长度为0，则是新的链表。
+      this.head = node;                 // 链表的头指向新的node。
     } else {
-      current = this.head;
+      current = this.head;              // current获得指向第一个节点的指针。
 
-      while (current.next) { // 当前node.next存在。
-        current = current.next; // current 变为当前node的下一个。
-      } // 当前node的下一个为null的时候，退出循环。
-      current.next = node;
-      node.previous = current;
+      while (current.next) {           // 当前node.next存在。
+        current = current.next;        // 如果当前节点（current）的next不为null，那么current.next这个指针就给了current。
+      }                                // current的下一个为null的时候，退出循环。
+      current.next = node;             // current.next为null退出循环（即已到了最后一个节点）,那么它的next为node
+      node.previous = current;         // 新加入的node的前一个就是current。
     }
-    this.length++;
+    this.length++;                     // 长度加一，别忘咯。
     console.log('Append successfully!');
   }
 
+  /**
+   * @param element
+   * @param {Number} position 要插入的某个位置. 
+   */
   insertNode (element, position) {
-    console.log(this.length);
     if (position >= 0 && position <= this.length) {
       let node = new Node(element),
         front,
         index = 0,
         current = this.head;
 
-      if (!position) { // 如果插入的位置为 0 。
+      if (!position) {                 // 如果插入的位置为 0 。
         this.head = node;
-        node.previous = this.previous; //node的前一个是链表的previous。
-        node.next = current; // node的后一个是之前head所指的，即是current。
+        node.next = current;           // node的后一个是之前head所指的，即是current。
       } else {
         while (index++ < position) {
-          front = current; // 当前变为前一个。
-          current = current.next; // 下一个就变为当前
+          front = current;             // 当前变为前一个。
+          current = current.next;      // 下一个就变为当前
         }
         front.next = current.previous = node; // 前一个的next 和 当前的previous 是node。
-        node.previous = front; // 插入的node的前一个为front。
-        node.next = current; // 插入的node的后一个是current。
+        node.previous = front;         // 插入的node的前一个为front。
+        node.next = current;           // 插入的node的后一个是current。
       }
       this.length++;
       console.log('Insert successfully!');
@@ -60,12 +64,15 @@ class DoubleLinkedList {
     }
   }
 
+  /**
+   * 
+   * @param {Number} position 
+   */
   removeNode (position) {
-    console.log(this.length);
     if (position > -1 && position < this.length) {
       let current = this.head, front, index = 0;
 
-      if (!position) { // 位置为 0 。
+      if (!position) {                           // 位置为 0 。
         this.head = current.next;
         current.next.previous = this.previous;
       } else {
@@ -73,10 +80,10 @@ class DoubleLinkedList {
           front = current;
           current = current.next;
         }
-        if (current.next) { // 这里判断当前node的下一个是否为 null。（例如要删除最后一个是node.next是null的）
-          current.next.previous = front; // 当前node的下一个的previous为front。（有点绕口）
+        if (current.next) {                      // 这里判断当前node的下一个是否为 null。（例如要删除最后一个是node.next是null的）
+          current.next.previous = front;         // 当前node的下一个的previous为front。（有点绕口）
         }
-        front.next = current.next; // 前一个的下一个为当前node的下一个。 (...绕口)
+        front.next = current.next;               // 前一个的下一个为current的下一个。 (...绕口)
       }
       this.length--;
       console.log('Remove successfully!');
@@ -85,16 +92,15 @@ class DoubleLinkedList {
     }
   }
 
-  print (nextNode) {
-    if (!nextNode) {
-      nextNode = this.head;
-      console.log(nextNode);
+  print () {
+    let arr = [this.head];
+    let node = this.head;
+    while (node.next) {
+      node = node.next;
+      arr.push(node);
     }
-    if (nextNode.next) {
-      console.log(nextNode.next);
-      if (!nextNode.next.next) return nextNode.next.element;
-      this.print(nextNode.next);
-    }
+
+    arr.map( (x, index) => console.log(`第${index + 1}个节点是`, x));
   }
 }
 
